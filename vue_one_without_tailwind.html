@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu App vue.js  </title>
+
+    <!--vue.js-->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+
+        <h1>{{ message }}</h1>
+
+        <p>contador</p>
+
+        <button @click="increment">click aqui</button>
+
+    </div>
+    
+</body>
+<script> 
+
+const { createApp } = Vue;
+
+createApp({setup() {
+    const message = Vue.ref('Olá Mundo 1');
+    const count = Vue.ref(0);
+
+    function increment() {
+        count.value++;
+        message.value = `Você clicou ${count.value} vezes`;
+    }
+
+    return { message, increment };
+}}).mount('#app');
+
+</script>
+
+</html>

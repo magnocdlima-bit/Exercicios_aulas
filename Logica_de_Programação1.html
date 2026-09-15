@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ 
+
+
+    
+    
+</body>
+
+
+<script>
+    // programa olá mundo 1
+
+    alert("Olá Mundo 1");
+
+    // somar duas variáveis
+
+    let numero1 = 10;
+    let numero2 = 5;
+
+    let soma = numero1 + numero2;
+     
+console.log("A soma de " + numero1 + " e " + numero2 + " é: " + soma);
+
+if (soma % 2 === 0) {
+    console.log("A soma é um número par.");
+} else {
+    console.log("A soma é um número ímpar.");
+}
+
+//  Receba dois números e diga se ele maior
+
+let num1 = parseFloat(prompt("Digite o primeiro número:"));
+let num2 = parseFloat(prompt("Digite o segundo número:"));
+
+if (num1 > num2) {
+    console.log(num1 + " é maior que " + num2);
+} else if (num2 > num1) {
+    console.log(num2 + " é maior que " + num1);
+} else {
+    console.log("Os dois números são iguais.");
+}
+
+
+// Condicional Positivo, Negativo ou Zero
+
+let numero = parseFloat(prompt("Digite um número:"));
+if (numero > 0) {
+    console.log("O número é positivo. Aprovado");
+} else if (numero < 0) {
+    console.log("O número é negativo. Reprovado");
+} else {
+    console.log("O número é zero. Recuperação");
+}
+
+// Aprovado ou Reprovado
+
+let nota1 = parseFloat(prompt("Digite a primeira nota:"));
+let nota2 = parseFloat(prompt("Digite a segunda nota:"));   
+let nota3 = parseFloat(prompt("Digite a terceira nota:"));
+
+let media = (nota1 + nota2 + nota3) / 3;
+
+if (media >= 7) {
+    console.log("O aluno está aprovado com média: " + media);
+} else {
+    console.log("O aluno está reprovado com média: " + media);
+}
+
+// Receba dois número e calcule com a Calculadora simples
+
+let numeroA = parseFloat(prompt("Digite o primeiro número:"));
+let numeroB = parseFloat(prompt("Digite o segundo número:"));
+
+let operacao = prompt("Digite a operação (+, -, *, /):");
+
+let resultado = numeroA + " " + operacao + " " + numeroB + " = ";
+
+    switch (operacao) {
+        case "+":
+            resultado += (numeroA + numeroB);
+            break;
+        case "-":
+            resultado += (numeroA - numeroB);
+            break;
+        case "*":
+            resultado += (numeroA * numeroB);
+            break;
+        case "/":
+            if (numeroB !== 0) {
+                resultado += (numeroA / numeroB);
+            } else {
+                resultado = "Erro: Divisão por zero não é permitida.";
+            }
+            break;
+        default:
+            resultado = "Operação inválida.";
+    }
+
+console.log(resultado);
+
+// Repetição de 1 a 10
+
+for (let i = 1; i <= 10; i++) {
+    console.log(i);
+}
+
+
+
+
+
+</script>
+</html>
