@@ -7,6 +7,7 @@
 </head>
 <body>
  
+    
 
 
     
@@ -111,9 +112,44 @@ for (let i = 1; i <= 10; i++) {
     console.log(i);
 }
 
+//   Receba um número e mostre sua tabuada de 1 a 10
 
+let numeroTabuada = parseInt(prompt("Digite um número para ver sua tabuada:"));
 
+for (let i = 1; i<=10; i++) {
+    let resultadoTabuada = numeroTabuada * i;
+    
+    console.log(numeroTabuada + " x " + i + " = " + resultadoTabuada);
+}
 
+//Soma de todos o números de 1 até n (número triangular)
+
+let n = parseInt(prompt("Digite um número inteiro positivo:"));
+
+if (n > 0) {
+    let somaTriangular = 0;
+    for (let i = 1; i <= n; i++) {
+        somaTriangular += i;
+    }
+    console.log("A soma de todos os números de 1 até " + n + " é: " + somaTriangular);
+} else {
+    console.log("Por favor, digite um número inteiro positivo.");
+}
+
+// Crie um programa que receba a idade de uma pessoa e informe:
+
+let idade = parseInt(prompt("Digite a idade da pessoa:"));
+if (idade < 0) {
+    console.log("Idade inválida.");
+} else if (idade < 18) {
+    console.log("menor de idade");
+} else if (idade < 60) {
+    console.log("Adulto");
+} else {
+    console.log("Idoso");
+    
+
+}
 
 </script>
 </html>
