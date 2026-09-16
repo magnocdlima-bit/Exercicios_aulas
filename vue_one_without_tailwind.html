@@ -1,43 +1,63 @@
 <!DOCTYPE html>
 <html lang="PT-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu App vue.js  </title>
+    <title>Meu App vue.js </title>
 
     <!--vue.js-->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
 </head>
 
-<body>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+
     <div id="app">
 
-        <h1>{{ message }}</h1>
+        <h1 class="text-2xl font-bold">{{ message }}</h1>
 
-        <p>contador</p>
+        <p class="text-lg font-semibold">Contador: {{ contador }}</p>
 
-        <button @click="increment">click aqui</button>
+        <button @click="incrementar" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            click aqui
+        </button>
+
+        <p v-if="contador === 0" class="mt-4 text-sm text-slate-400">
+            Ainda não houve nenhum clique.
+        </p>
+        <p v-else-if="contador < 5" class="mt-4 text-sm text-cyan-300">
+            Muito bem! Voce ja clicou {{ contador }} vez(es).
+        </p>
+        <p v-else class="mt-4 text-sm text-emerald-300">
+            Meta atingida! Voce clicou {{ contador }} vezes.
+        </p>
 
     </div>
     
+    <script>
+        
+         const { createApp, ref } = Vue;
+
+        createApp({
+            setup() {
+                const message = ref('Olá, Vue.js!');
+                const contador = ref(0);
+
+                function incrementar() {
+                    contador.value++;
+                }
+
+                return {
+                    message,
+                    contador,
+                    incrementar
+                }
+            }
+        }).mount('#app');
+        
+    </script>
 </body>
-<script> 
-
-const { createApp } = Vue;
-
-createApp({setup() {
-    const message = Vue.ref('Olá Mundo 1');
-    const count = Vue.ref(0);
-
-    function increment() {
-        count.value++;
-        message.value = `Você clicou ${count.value} vezes`;
-    }
-
-    return { message, increment };
-}}).mount('#app');
-
-</script>
 
 </html>

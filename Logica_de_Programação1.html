@@ -3,13 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Document</title>
 </head>
+
 <body>
  
+     
+        <h1 class="text-2xl font-bold">Olá, Mundo!</h1>
+    <h1 class="text-2xl font-bold">Exercícios de Lógica de Programação</h1>
+       <h2 class="text-xl font-semibold">Somar Números</h2>
+       <div class="bg-gray-200 p-2"> <input type="number" id="numero1" placeholder="Digite o primeiro número"></div>
+       <div class="bg-gray-200 p-2"> <input type="number" id="numero2" placeholder="Digite o segundo número"></div>
+       <button class="bg-blue-500 text-white p-2 rounded"  id="somarBtn">Somar</button>
+       <div class="bg-gray-200 p-2" id="resultado"></div>
+       
+      
+        <h2 class="text-2xl font-bold">Receber Dois Números e Dizer qual é o Maior</h2>
+        <div class="bg-gray-200 p-2"> <input type="number" id="num1" placeholder="Digite o primeiro número"></div>
+        <div class="bg-gray-200 p-2"> <input type="number" id="num2" placeholder="Digite o segundo número"></div>
+        <button class="bg-blue-500 text-white p-2 rounded" id="verificar">Verificar Maior</button>
+        <div class="bg-gray-200 p-2" id="resultadoMaior"></div>
     
-
-
     
     
 </body>
@@ -21,135 +36,146 @@
     alert("Olá Mundo 1");
 
     // somar duas variáveis
-
-    let numero1 = 10;
-    let numero2 = 5;
-
+    document.getElementById("somarBtn").addEventListener("click", function() {
+    
+    
+    let numero1 = parseFloat(document.getElementById("numero1").value);
+    let numero2 = parseFloat(document.getElementById("numero2").value);
     let soma = numero1 + numero2;
-     
-console.log("A soma de " + numero1 + " e " + numero2 + " é: " + soma);
-
-if (soma % 2 === 0) {
-    console.log("A soma é um número par.");
-} else {
-    console.log("A soma é um número ímpar.");
-}
-
-//  Receba dois números e diga se ele maior
-
-let num1 = parseFloat(prompt("Digite o primeiro número:"));
-let num2 = parseFloat(prompt("Digite o segundo número:"));
-
-if (num1 > num2) {
-    console.log(num1 + " é maior que " + num2);
-} else if (num2 > num1) {
-    console.log(num2 + " é maior que " + num1);
-} else {
-    console.log("Os dois números são iguais.");
-}
-
-
-// Condicional Positivo, Negativo ou Zero
-
-let numero = parseFloat(prompt("Digite um número:"));
-if (numero > 0) {
-    console.log("O número é positivo. Aprovado");
-} else if (numero < 0) {
-    console.log("O número é negativo. Reprovado");
-} else {
-    console.log("O número é zero. Recuperação");
-}
-
-// Aprovado ou Reprovado
-
-let nota1 = parseFloat(prompt("Digite a primeira nota:"));
-let nota2 = parseFloat(prompt("Digite a segunda nota:"));   
-let nota3 = parseFloat(prompt("Digite a terceira nota:"));
-
-let media = (nota1 + nota2 + nota3) / 3;
-
-if (media >= 7) {
-    console.log("O aluno está aprovado com média: " + media);
-} else {
-    console.log("O aluno está reprovado com média: " + media);
-}
-
-// Receba dois número e calcule com a Calculadora simples
-
-let numeroA = parseFloat(prompt("Digite o primeiro número:"));
-let numeroB = parseFloat(prompt("Digite o segundo número:"));
-
-let operacao = prompt("Digite a operação (+, -, *, /):");
-
-let resultado = numeroA + " " + operacao + " " + numeroB + " = ";
-
-    switch (operacao) {
-        case "+":
-            resultado += (numeroA + numeroB);
-            break;
-        case "-":
-            resultado += (numeroA - numeroB);
-            break;
-        case "*":
-            resultado += (numeroA * numeroB);
-            break;
-        case "/":
-            if (numeroB !== 0) {
-                resultado += (numeroA / numeroB);
-            } else {
-                resultado = "Erro: Divisão por zero não é permitida.";
-            }
-            break;
-        default:
-            resultado = "Operação inválida.";
-    }
-
-console.log(resultado);
-
-// Repetição de 1 a 10
-
-for (let i = 1; i <= 10; i++) {
-    console.log(i);
-}
-
-//   Receba um número e mostre sua tabuada de 1 a 10
-
-let numeroTabuada = parseInt(prompt("Digite um número para ver sua tabuada:"));
-
-for (let i = 1; i<=10; i++) {
-    let resultadoTabuada = numeroTabuada * i;
+    let parImpar = ""; 
     
-    console.log(numeroTabuada + " x " + i + " = " + resultadoTabuada);
+    if (soma % 2 === 0) {
+    parImpar = "número par";
+} else {
+     parImpar = "número impar";
 }
 
-//Soma de todos o números de 1 até n (número triangular)
 
-let n = parseInt(prompt("Digite um número inteiro positivo:"));
+    document.getElementById("resultado").textContent = "A soma é do : " + soma + " e é um " + parImpar;
+});
 
-if (n > 0) {
-    let somaTriangular = 0;
-    for (let i = 1; i <= n; i++) {
-        somaTriangular += i;
-    }
-    console.log("A soma de todos os números de 1 até " + n + " é: " + somaTriangular);
+
+
+ //  Receba dois números e diga se ele maior
+
+
+
+document.getElementById("verificar").addEventListener("click", function() {
+    let num1 = Number(document.getElementById("num1").value);
+let num2 = Number(document.getElementById("num2").value);
+let restultadoMaior = document.getElementById("resultadoMaior");
+console.log("Número 1:", num1);
+console.log("Número 2:", num2);
+if (num1 === num2) {
+    restultadoMaior.textContent = "Os números são iguais.";
+} else if (num1 > num2) {
+    restultadoMaior.textContent = num1 + " é maior que " + num2;
 } else {
-    console.log("Por favor, digite um número inteiro positivo.");
+    restultadoMaior.textContent = num2 + " é maior que " + num1;
 }
+});
 
-// Crie um programa que receba a idade de uma pessoa e informe:
+// // Condicional Positivo, Negativo ou Zero
 
-let idade = parseInt(prompt("Digite a idade da pessoa:"));
-if (idade < 0) {
-    console.log("Idade inválida.");
-} else if (idade < 18) {
-    console.log("menor de idade");
-} else if (idade < 60) {
-    console.log("Adulto");
-} else {
-    console.log("Idoso");
+// let numero = parseFloat(prompt("Digite um número:"));
+// if (numero > 0) {
+//     console.log("O número é positivo. Aprovado");
+// } else if (numero < 0) {
+//     console.log("O número é negativo. Reprovado");
+// } else {
+//     console.log("O número é zero. Recuperação");
+// }
+
+// // Aprovado ou Reprovado
+
+// let nota1 = parseFloat(prompt("Digite a primeira nota:"));
+// let nota2 = parseFloat(prompt("Digite a segunda nota:"));   
+// let nota3 = parseFloat(prompt("Digite a terceira nota:"));
+
+// let media = (nota1 + nota2 + nota3) / 3;
+
+// if (media >= 7) {
+//     console.log("O aluno está aprovado com média: " + media);
+// } else {
+//     console.log("O aluno está reprovado com média: " + media);
+// }
+
+// // Receba dois número e calcule com a Calculadora simples
+
+// let numeroA = parseFloat(prompt("Digite o primeiro número:"));
+// let numeroB = parseFloat(prompt("Digite o segundo número:"));
+
+// let operacao = prompt("Digite a operação (+, -, *, /):");
+
+// let resultado = numeroA + " " + operacao + " " + numeroB + " = ";
+
+//     switch (operacao) {
+//         case "+":
+//             resultado += (numeroA + numeroB);
+//             break;
+//         case "-":
+//             resultado += (numeroA - numeroB);
+//             break;
+//         case "*":
+//             resultado += (numeroA * numeroB);
+//             break;
+//         case "/":
+//             if (numeroB !== 0) {
+//                 resultado += (numeroA / numeroB);
+//             } else {
+//                 resultado = "Erro: Divisão por zero não é permitida.";
+//             }
+//             break;
+//         default:
+//             resultado = "Operação inválida.";
+//     }
+
+// console.log(resultado);
+
+// // Repetição de 1 a 10
+
+// for (let i = 1; i <= 10; i++) {
+//     console.log(i);
+// }
+
+// //   Receba um número e mostre sua tabuada de 1 a 10
+
+// let numeroTabuada = parseInt(prompt("Digite um número para ver sua tabuada:"));
+
+// for (let i = 1; i<=10; i++) {
+//     let resultadoTabuada = numeroTabuada * i;
+    
+//     console.log(numeroTabuada + " x " + i + " = " + resultadoTabuada);
+// }
+
+// //Soma de todos o números de 1 até n (número triangular)
+
+// let n = parseInt(prompt("Digite um número inteiro positivo:"));
+
+// if (n > 0) {
+//     let somaTriangular = 0;
+//     for (let i = 1; i <= n; i++) {
+//         somaTriangular += i;
+//     }
+//     console.log("A soma de todos os números de 1 até " + n + " é: " + somaTriangular);
+// } else {
+//     console.log("Por favor, digite um número inteiro positivo.");
+// }
+
+// // Crie um programa que receba a idade de uma pessoa e informe:
+
+// let idade = parseInt(prompt("Digite a idade da pessoa:"));
+// if (idade < 0) {
+//     console.log("Idade inválida.");
+// } else if (idade < 18) {
+//     console.log("menor de idade");
+// } else if (idade < 60) {
+//     console.log("Adulto");
+// } else {
+//     console.log("Idoso");
     
 
-}
+// }
 
-</script>
-</html>
+ </script>
+ </html>
