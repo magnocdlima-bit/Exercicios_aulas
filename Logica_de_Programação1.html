@@ -4,29 +4,587 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
     <title>Document</title>
-</head>
+    <body class="min-h-screen bg-slate-700 text-slate-800">
 
-<body>
- 
-     
-        <h1 class="text-2xl font-bold">Olá, Mundo!</h1>
-    <h1 class="text-2xl font-bold">Exercícios de Lógica de Programação</h1>
-       <h2 class="text-xl font-semibold">Somar Números</h2>
-       <div class="bg-gray-200 p-2"> <input type="number" id="numero1" placeholder="Digite o primeiro número"></div>
-       <div class="bg-gray-200 p-2"> <input type="number" id="numero2" placeholder="Digite o segundo número"></div>
-       <button class="bg-blue-500 text-white p-2 rounded"  id="somarBtn">Somar</button>
-       <div class="bg-gray-200 p-2" id="resultado"></div>
-       
-      
-        <h2 class="text-2xl font-bold">Receber Dois Números e Dizer qual é o Maior</h2>
-        <div class="bg-gray-200 p-2"> <input type="number" id="num1" placeholder="Digite o primeiro número"></div>
-        <div class="bg-gray-200 p-2"> <input type="number" id="num2" placeholder="Digite o segundo número"></div>
-        <button class="bg-blue-500 text-white p-2 rounded" id="verificar">Verificar Maior</button>
-        <div class="bg-gray-200 p-2" id="resultadoMaior"></div>
-    
-    
-    
+    <!-- CABEÇALHO -->
+    <header class="bg-gradient-to-r from-black to-indigo-700 text-white shadow-lg">
+
+        <div class="max-w-5xl mx-auto px-6 py-10 text-center">
+
+            <h1 class="text-4xl font-bold mb-3">
+                Exercícios de Lógica de Programação
+            </h1>
+
+            <p class="text-blue-100 text-lg">
+                Pratique conceitos básicos de JavaScript
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="max-w-5xl mx-auto px-6 py-10">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+            <!-- ========================= -->
+            <!-- EXERCÍCIO 1 - SOMA -->
+            <!-- ========================= -->
+
+            <section
+                class="bg-white rounded-2xl shadow-md p-6 border border-slate-200 hover:shadow-xl transition">
+
+                <div class="mb-5">
+
+                    <span class="text-sm font-semibold text-blue-600">
+                        EXERCÍCIO 01
+                    </span>
+
+                    <h2 class="text-2xl font-bold mt-1">
+                        Somar Números
+                    </h2>
+
+                    <p class="text-slate-500 mt-2">
+                        Digite dois números para realizar a soma.
+                    </p>
+
+                </div>
+
+
+                <div class="space-y-3">
+
+                    <input
+                        type="number"
+                        id="numero1"
+                        placeholder="Digite o primeiro número"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500
+                               focus:border-blue-500">
+
+                    <input
+                        type="number"
+                        id="numero2"
+                        placeholder="Digite o segundo número"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500
+                               focus:border-blue-500">
+
+                    <button
+                        id="somarBtn"
+                        class="w-full bg-blue-600 hover:bg-blue-700
+                               text-white font-semibold py-3 rounded-xl
+                               transition cursor-pointer">
+
+                        Somar
+
+                    </button>
+
+
+                    <div
+                        id="resultado"
+                        class="bg-slate-100 rounded-xl p-4 min-h-14 font-medium">
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ========================= -->
+            <!-- EXERCÍCIO 2 - MAIOR -->
+            <!-- ========================= -->
+
+            <section
+                class="bg-white rounded-2xl shadow-md p-6 border border-slate-200 hover:shadow-xl transition">
+
+                <div class="mb-5">
+
+                    <span class="text-sm font-semibold text-blue-600">
+                        EXERCÍCIO 02
+                    </span>
+
+                    <h2 class="text-2xl font-bold mt-1">
+                        Qual Número é Maior?
+                    </h2>
+
+                    <p class="text-slate-500 mt-2">
+                        Compare dois números e descubra qual deles é maior.
+                    </p>
+
+                </div>
+
+
+                <div class="space-y-3">
+
+                    <input
+                        type="number"
+                        id="num1"
+                        placeholder="Digite o primeiro número"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                    <input
+                        type="number"
+                        id="num2"
+                        placeholder="Digite o segundo número"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+
+                    <button
+                        id="verificar"
+                        class="w-full bg-blue-600 hover:bg-blue-700
+                               text-white font-semibold py-3 rounded-xl
+                               transition cursor-pointer">
+
+                        Verificar Maior
+
+                    </button>
+
+
+                    <div
+                        id="resultadoMaior"
+                        class="bg-slate-100 rounded-xl p-4 min-h-14 font-medium">
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ========================= -->
+            <!-- EXERCÍCIO 3 - CONDICIONAL -->
+            <!-- ========================= -->
+
+            <section
+                class="bg-white rounded-2xl shadow-md p-6 border border-slate-200 hover:shadow-xl transition">
+
+                <div class="mb-5">
+
+                    <span class="text-sm font-semibold text-blue-600">
+                        EXERCÍCIO 03
+                    </span>
+
+                    <h2 class="text-2xl font-bold mt-1">
+                        Positivo, Negativo ou Zero
+                    </h2>
+
+                    <p class="text-slate-500 mt-2">
+                        Descubra a classificação do número informado.
+                    </p>
+
+                </div>
+
+
+                <div class="space-y-3">
+
+                    <input
+                        type="number"
+                        id="numeroCondicional"
+                        placeholder="Digite um número"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+
+                    <button
+                        id="verificarCondicional"
+                        class="w-full bg-blue-600 hover:bg-blue-700
+                               text-white font-semibold py-3 rounded-xl
+                               transition cursor-pointer">
+
+                        Verificar Número
+
+                    </button>
+
+
+                    <div
+                        id="resultadoCondicional"
+                        class="bg-slate-100 rounded-xl p-4 min-h-14 font-medium">
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ========================= -->
+            <!-- EXERCÍCIO 4 - NOTAS -->
+            <!-- ========================= -->
+
+            <section
+                class="bg-white rounded-2xl shadow-md p-6 border border-slate-200 hover:shadow-xl transition">
+
+                <div class="mb-5">
+
+                    <span class="text-sm font-semibold text-blue-600">
+                        EXERCÍCIO 04
+                    </span>
+
+                    <h2 class="text-2xl font-bold mt-1">
+                        Aprovado ou Reprovado
+                    </h2>
+
+                    <p class="text-slate-500 mt-2">
+                        Informe as três notas para calcular a média.
+                    </p>
+
+                </div>
+
+
+                <div class="space-y-3">
+
+                    <input
+                        type="number"
+                        id="nota1"
+                        placeholder="Digite a primeira nota"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                    <input
+                        type="number"
+                        id="nota2"
+                        placeholder="Digite a segunda nota"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                    <input
+                        type="number"
+                        id="nota3"
+                        placeholder="Digite a terceira nota"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+
+                    <button
+                        id="verificarAprovado"
+                        class="w-full bg-blue-600 hover:bg-blue-700
+                               text-white font-semibold py-3 rounded-xl
+                               transition cursor-pointer">
+
+                        Verificar Aprovação
+
+                    </button>
+
+
+                    <div
+                        id="resultadoAprovado"
+                        class="bg-slate-100 rounded-xl p-4 min-h-14 font-medium">
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ========================= -->
+            <!-- EXERCÍCIO 5 - CALCULADORA -->
+            <!-- ========================= -->
+
+            <section
+                class="md:col-span-2 bg-white rounded-2xl shadow-md p-6
+                       border border-slate-200 hover:shadow-xl transition">
+
+                <div class="mb-5">
+
+                    <span class="text-sm font-semibold text-blue-600">
+                        EXERCÍCIO 05
+                    </span>
+
+                    <h2 class="text-2xl font-bold mt-1">
+                        Calculadora Simples
+                    </h2>
+
+                    <p class="text-slate-500 mt-2">
+                        Digite dois números, escolha uma operação e clique em calcular.
+                    </p>
+
+                </div>
+
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+
+                    <input
+                        type="number"
+                        id="numeroA"
+                        placeholder="Digite o primeiro número"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                    <input
+                        type="number"
+                        id="numeroB"
+                        placeholder="Digite o segundo número"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                </div>
+
+
+                <!-- OPERAÇÕES -->
+
+                <div class="flex flex-wrap gap-3">
+
+                    <button
+                        id="somarCalculadora"
+                        class="w-14 h-14 bg-slate-800 hover:bg-blue-600
+                               text-white rounded-xl transition cursor-pointer">
+
+                        <i class="fas fa-plus text-xl"></i>
+
+                    </button>
+
+
+                    <button
+                        id="subtrairCalculadora"
+                        class="w-14 h-14 bg-slate-800 hover:bg-blue-600
+                               text-white rounded-xl transition cursor-pointer">
+
+                        <i class="fas fa-minus text-xl"></i>
+
+                    </button>
+
+
+                    <button
+                        id="multiplicarCalculadora"
+                        class="w-14 h-14 bg-slate-800 hover:bg-blue-600
+                               text-white rounded-xl transition cursor-pointer">
+
+                        <i class="fas fa-times text-xl"></i>
+
+                    </button>
+
+
+                    <button
+                        id="dividirCalculadora"
+                        class="w-14 h-14 bg-slate-800 hover:bg-blue-600
+                               text-white rounded-xl transition cursor-pointer">
+
+                        <i class="fas fa-divide text-xl"></i>
+
+                    </button>
+
+
+                    <button
+                        id="verificarCalculadora"
+                        class="h-14 px-6 bg-blue-600 hover:bg-blue-700
+                               text-white font-semibold rounded-xl
+                               transition cursor-pointer">
+
+                        <i class="fas fa-calculator mr-2"></i>
+
+                        Calcular
+
+                    </button>
+
+                </div>
+
+
+                <!-- RESULTADO -->
+
+                <div
+                    id="resultadoCalculadora"
+                    class="mt-5 bg-blue-50 border border-blue-100
+                           rounded-xl p-5 min-h-16">
+
+                    <span class="text-slate-500">
+                        O resultado aparecerá aqui.
+                    </span>
+
+                </div>
+
+
+              
+            </section>
+            <!-- EXERCÍCIO 06  -->
+            <section
+
+                class="md:col-span-2 bg-white rounded-2xl shadow-md p-6
+                       border border-slate-200 hover:shadow-xl transition">
+
+                <div class="mb-5">
+
+                    <span class="text-sm font-semibold text-blue-600">
+                        EXERCÍCIO 06
+                    </span>
+
+                    <h2 class="text-2xl font-bold mt-1">
+                        Repetição de 1 a N vezes 
+                    </h2>
+
+                    <p class="text-slate-500 mt-2">
+                        Exemplo de repetição usando um loop for.
+                    </p>
+
+                </div>
+
+                <div class="bg-slate-100 rounded-xl p-4 min-h-14 font-medium">
+                    <ul id="resultadoRepeticao"></ul>
+                </div>
+                <input
+                        type="number"
+                        id="nVezes"
+                        placeholder="Digite um número para repetir até ele"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button
+                        id="verificarRepeticao"
+                        class="w-full bg-blue-600 hover:bg-blue-700
+                               text-white font-semibold py-3 rounded-xl
+                               transition cursor-pointer">
+
+                        Repetir
+
+                    </button>
+            </section>
+
+            <!--EXERCÍCIO 7 TABUADA 10 -->
+            <section
+                class="md:col-span-2 bg-white rounded-2xl shadow-md p-6
+                       border border-slate-200 hover:shadow-xl transition">
+
+                <div class="mb-5">
+
+                    <span class="text-sm font-semibold text-blue-600">
+                        EXERCÍCIO 07
+                    </span>
+
+                    <h2 class="text-2xl font-bold mt-1">
+                        Tabuada de 1 a 10
+                    </h2>
+
+                    <p class="text-slate-500 mt-2">
+                        Exemplo de tabuada usando um loop for.
+                    </p>
+
+                </div>
+
+                <div class="bg-slate-100 rounded-xl p-4 min-h-14 font-medium">
+                    <ul id="resultadoTabuada"></ul>
+                </div>
+
+                <input
+                        type="number"
+                        id="numeroTabuada"
+                        placeholder="Digite um número para ver sua tabuada"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    
+                    <button
+
+                        id="verificarTabuada"
+                        class="w-full bg-blue-600 hover:bg-blue-700
+                               text-white font-semibold py-3 rounded-xl
+                               transition cursor-pointer">
+
+                        Ver Tabuada
+
+                    </button>
+        </div>
+         
+        <!-- EXERCÍCIO 8 NÚMERO TRIANGULAR -->
+        <section
+                class="md:col-span-2 bg-white rounded-2xl shadow-md p-6
+                       border border-slate-200 hover:shadow-xl transition">
+
+                <div class="mb-5">
+
+                    <span class="text-sm font-semibold text-blue-600">
+                        EXERCÍCIO 08
+                    </span>
+
+                    <h2 class="text-2xl font-bold mt-1">
+                        Número Triangular
+                    </h2>
+
+                    <p class="text-slate-500 mt-2">
+                        Exemplo de soma de todos os números de 1 até N.
+                    </p>
+
+                </div>
+
+                <div class="bg-slate-100 rounded-xl p-4 min-h-14 font-medium">
+                    <ul id="resultadoTriangular"></ul>
+                </div>
+
+                <input
+                        type="number"
+                        id="numeroTriangular"
+                        placeholder="Digite um número para ver sua soma triangular"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    
+                    <button
+
+                        id="verificarTriangular"
+                        class="w-full bg-blue-600 hover:bg-blue-700
+                               text-white font-semibold py-3 rounded-xl
+                               transition cursor-pointer">
+
+                        Ver Soma Triangular
+
+                    </button>
+
+            </section>
+
+            <!-- EXERCÍCIO 9 - IDADE -->
+             
+            <section
+                class="md:col-span-2 bg-white rounded-2xl shadow-md p-6
+                       border border-slate-200 hover:shadow-xl transition">
+
+                <div class="mb-5">
+
+                    <span class="text-sm font-semibold text-blue-600">
+                        EXERCÍCIO 09
+                    </span>
+
+                    <h2 class="text-2xl font-bold mt-1">
+                        Classificação por Idade
+                    </h2>
+
+                    <p class="text-slate-500 mt-2">
+                        Informe a idade para descobrir a classificação.
+                    </p>
+
+                </div>
+
+                <div class="bg-slate-100 rounded-xl p-4 min-h-14 font-medium">
+                    <ul id="resultadoIdade"></ul>
+                </div>
+
+                <input
+                        type="number"
+                        id="idade"
+                        placeholder="Digite sua idade"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    
+                    <button
+
+                        id="verificarIdade"
+                        class="w-full bg-blue-600 hover:bg-blue-700
+                               text-white font-semibold py-3 rounded-xl
+                               transition cursor-pointer">
+
+                        Verificar Idade
+
+                    </button>
+
+    </main>
+
 </body>
 
 
@@ -64,8 +622,7 @@ document.getElementById("verificar").addEventListener("click", function() {
     let num1 = Number(document.getElementById("num1").value);
 let num2 = Number(document.getElementById("num2").value);
 let restultadoMaior = document.getElementById("resultadoMaior");
-console.log("Número 1:", num1);
-console.log("Número 2:", num2);
+
 if (num1 === num2) {
     restultadoMaior.textContent = "Os números são iguais.";
 } else if (num1 > num2) {
@@ -75,107 +632,179 @@ if (num1 === num2) {
 }
 });
 
-// // Condicional Positivo, Negativo ou Zero
+// Condicional Positivo, Negativo ou Zero
 
-// let numero = parseFloat(prompt("Digite um número:"));
-// if (numero > 0) {
-//     console.log("O número é positivo. Aprovado");
-// } else if (numero < 0) {
-//     console.log("O número é negativo. Reprovado");
-// } else {
-//     console.log("O número é zero. Recuperação");
-// }
+document.getElementById("verificarCondicional").addEventListener("click", function() {
+    let numeroCondicional = Number(document.getElementById("numeroCondicional").value);
+    let resultadoCondicional = document.getElementById("resultadoCondicional");
 
-// // Aprovado ou Reprovado
+    if (numeroCondicional > 0) {
+        resultadoCondicional.textContent = "O número é positivo.";
+    } else if (numeroCondicional < 0) 
+    { resultadoCondicional.textContent = "O número é negativo.";
+    } else {
+        resultadoCondicional.textContent = "O número é zero.";
+    }
+});
 
-// let nota1 = parseFloat(prompt("Digite a primeira nota:"));
-// let nota2 = parseFloat(prompt("Digite a segunda nota:"));   
-// let nota3 = parseFloat(prompt("Digite a terceira nota:"));
 
-// let media = (nota1 + nota2 + nota3) / 3;
+// Aprovado ou Reprovado
 
-// if (media >= 7) {
-//     console.log("O aluno está aprovado com média: " + media);
-// } else {
-//     console.log("O aluno está reprovado com média: " + media);
-// }
 
-// // Receba dois número e calcule com a Calculadora simples
 
-// let numeroA = parseFloat(prompt("Digite o primeiro número:"));
-// let numeroB = parseFloat(prompt("Digite o segundo número:"));
+document.getElementById("verificarAprovado").addEventListener("click",function() {
 
-// let operacao = prompt("Digite a operação (+, -, *, /):");
+    let nota1 = parseFloat(document.getElementById("nota1").value);
+    let nota2 = parseFloat(document.getElementById("nota2").value);
+    let nota3 = parseFloat(document.getElementById("nota3").value);
+    let resultadoAprovado = document.getElementById("resultadoAprovado");
 
-// let resultado = numeroA + " " + operacao + " " + numeroB + " = ";
+    let media = (nota1 + nota2 + nota3) / 3;
 
-//     switch (operacao) {
-//         case "+":
-//             resultado += (numeroA + numeroB);
-//             break;
-//         case "-":
-//             resultado += (numeroA - numeroB);
-//             break;
-//         case "*":
-//             resultado += (numeroA * numeroB);
-//             break;
-//         case "/":
-//             if (numeroB !== 0) {
-//                 resultado += (numeroA / numeroB);
-//             } else {
-//                 resultado = "Erro: Divisão por zero não é permitida.";
-//             }
-//             break;
-//         default:
-//             resultado = "Operação inválida.";
-//     }
+    if (media >= 7) {
+        resultadoAprovado.textContent = "Aprovado com média: " + media.toFixed(3);
+    } else {
+        resultadoAprovado.textContent = "Reprovado com média: " + media.toFixed(3);
+    }
+})
 
-// console.log(resultado);
 
-// // Repetição de 1 a 10
 
-// for (let i = 1; i <= 10; i++) {
-//     console.log(i);
-// }
 
-// //   Receba um número e mostre sua tabuada de 1 a 10
 
-// let numeroTabuada = parseInt(prompt("Digite um número para ver sua tabuada:"));
+// Receba dois número e calcule com a Calculadora simples
 
-// for (let i = 1; i<=10; i++) {
-//     let resultadoTabuada = numeroTabuada * i;
+
+    let operacao = "";
+
+ document.getElementById("somarCalculadora").addEventListener("click", function() {
+    operacao = "+";
+});
+document.getElementById("multiplicarCalculadora").addEventListener("click", function() {
+    operacao = "*";
+});
+document.getElementById("dividirCalculadora").addEventListener("click", function() {
+    operacao = "/";
+});
+document.getElementById("subtrairCalculadora").addEventListener("click", function() {
+    operacao = "-";
+});
+
+document.getElementById("verificarCalculadora").addEventListener("click", function() {
     
-//     console.log(numeroTabuada + " x " + i + " = " + resultadoTabuada);
-// }
-
-// //Soma de todos o números de 1 até n (número triangular)
-
-// let n = parseInt(prompt("Digite um número inteiro positivo:"));
-
-// if (n > 0) {
-//     let somaTriangular = 0;
-//     for (let i = 1; i <= n; i++) {
-//         somaTriangular += i;
-//     }
-//     console.log("A soma de todos os números de 1 até " + n + " é: " + somaTriangular);
-// } else {
-//     console.log("Por favor, digite um número inteiro positivo.");
-// }
-
-// // Crie um programa que receba a idade de uma pessoa e informe:
-
-// let idade = parseInt(prompt("Digite a idade da pessoa:"));
-// if (idade < 0) {
-//     console.log("Idade inválida.");
-// } else if (idade < 18) {
-//     console.log("menor de idade");
-// } else if (idade < 60) {
-//     console.log("Adulto");
-// } else {
-//     console.log("Idoso");
     
+    let numeroA = parseFloat(document.getElementById("numeroA").value);
+    let numeroB = parseFloat(document.getElementById("numeroB").value);
 
-// }
+    let resultadoCalculadora = document.getElementById("resultadoCalculadora");
+
+
+
+    switch (operacao) {
+        case "+":
+            resultadoCalculadora.textContent = "Resultado: " + (numeroA + numeroB);
+            break;
+        case "-":
+            resultadoCalculadora.textContent = "Resultado: " + (numeroA - numeroB);
+            break;
+        case "*":
+            resultadoCalculadora.textContent = "Resultado: " + (numeroA * numeroB);
+            break;
+        case "/":
+            if (numeroB !== 0) {
+                resultadoCalculadora.textContent = "Resultado: " + (numeroA / numeroB);
+            } else {
+                resultadoCalculadora.textContent = "Erro: Divisão por zero!";
+            }
+            break;
+        default:
+            resultadoCalculadora.textContent = "Selecione uma operação.";
+    }});
+   
+
+
+
+console.log(resultado);
+
+// Repetição de 1 a n vezes
+
+// Repetição de 1 a n vezes
+
+document.getElementById("verificarRepeticao").addEventListener("click", function() {
+
+    let nVezes = parseInt(document.getElementById("nVezes").value);
+
+    // Limpa o resultado anterior
+    document.getElementById("resultadoRepeticao").innerHTML = "";
+
+    for (let i = 1; i <= nVezes; i++) {
+
+        document.getElementById("resultadoRepeticao").innerHTML += ` ${i} `;
+
+    }
+
+});
+
+    //   Receba um número e mostre sua tabuada de 1 a 10
+
+ document.getElementById("verificarTabuada").addEventListener("click", function() {
+
+    let numeroTabuada = parseInt(document.getElementById("numeroTabuada").value);
+
+    // Limpa o resultado anterior
+    document.getElementById("resultadoTabuada").innerHTML = "";
+
+    for (let i = 1; i <= 10; i++) {
+
+        let resultado = numeroTabuada * i;
+
+        document.getElementById("resultadoTabuada").innerHTML += `${numeroTabuada} x ${i} = ${resultado}<br>`;
+
+    }});
+
+
+//Soma de todos o números de 1 até n (número triangular)
+
+document.getElementById("verificarTriangular").addEventListener("click", function() {
+
+    let numeroTriangular = parseInt(document.getElementById("numeroTriangular").value);
+
+    // Limpa o resultado anterior
+    document.getElementById("resultadoTriangular").innerHTML = "";
+
+    let soma = 0;
+
+    for (let i = 1; i <= numeroTriangular; i++) {
+        soma += i;
+    }
+
+    document.getElementById("resultadoTriangular").innerHTML = `A soma de todos os números de 1 até ${numeroTriangular} é: ${soma}`;
+
+});
+
+
+
+
+// Crie um programa que receba a idade de uma pessoa e informe:
+
+ 
+document.getElementById("verificarIdade").addEventListener("click", function() {
+
+    let idade = parseInt(document.getElementById("idade").value);
+
+    // Limpa o resultado anterior
+    document.getElementById("resultadoIdade").innerHTML = "";
+
+    if (idade < 0) {
+        document.getElementById("resultadoIdade").innerHTML = "Idade inválida.";
+    } else if (idade < 18) {
+        document.getElementById("resultadoIdade").innerHTML = "Você é menor de idade.";
+    } else if (idade < 65) {
+        document.getElementById("resultadoIdade").innerHTML = "Você é adulto.";
+    } else {
+        document.getElementById("resultadoIdade").innerHTML = "Você é idoso.";
+    }
+});
 
  </script>
  </html>
