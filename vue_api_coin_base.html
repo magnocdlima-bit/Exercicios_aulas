@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Crypto Dashboard - Vue.js</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body class="min-h-screen bg-slate-950 text-slate-100">
+
+<div id="app" class="min-h-screen">
+
+    <!-- ================================================== -->
+    <!-- CABEÇALHO -->
+    <!-- ================================================== -->
+
+    <header class="border-b border-slate-800 bg-slate-900/80">
+
+        <div class="max-w-7xl mx-auto px-6 py-8">
+
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+                <div>
+
+                    <p class="text-cyan-400 text-sm font-semibold uppercase tracking-widest">
+                        Vue.js + Coinbase API
+                    </p>
+
+                    <h1 class="text-3xl md:text-4xl font-bold mt-2">
+                        Crypto Dashboard
+                    </h1>
+
+                    <p class="text-slate-400 mt-2">
+                        Consulte criptomoedas disponíveis na Coinbase.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="flex items-center gap-2 bg-slate-950
+                           border border-slate-800 rounded-xl
+                           px-4 py-3"
+                >
+
+                    <span
+                        class="w-3 h-3 rounded-full"
+                        :class="atualizando ? 'bg-yellow-400' : 'bg-green-400'"
+                    ></span>
+
+                    <span class="text-sm text-slate-400">
+                        {{ atualizando ? "Atualizando..." : "API conectada" }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================================== -->
+    <!-- CONTEÚDO -->
+    <!-- ================================================== -->
+
+    <main class="max-w-7xl mx-auto px-6 py-10">
+
+
+        <!-- ================================================== -->
+        <!-- CAMPO DE PESQUISA -->
+        <!-- ================================================== -->
+
+        <section
+            class="bg-slate-900 border border-slate-800
+                   rounded-3xl p-6 md:p-8 shadow-2xl mb-10"
+        >
+
+            <div class="max-w-3xl">
+
+                <p class="text-cyan-400 text-xs uppercase tracking-widest font-semibold">
+                    Consulta livre
+                </p>
+
+                <h2 class="text-2xl font-bold mt-2">
+                    Qual criptomoeda deseja consultar?
+                </h2>
+
+                <p class="text-slate-400 mt-2">
+                    Pesquise pelo símbolo ou pelo par disponível na Coinbase.
+                </p>
+
+            </div>
+
+
+            <!-- PESQUISA -->
+
+            <div class="relative mt-6">
+
+                <div class="flex flex-col md:flex-row gap-3">
+
+                    <div class="relative flex-1">
+
+                        <span
+                            class="absolute left-5 top-1/2 -translate-y-1/2
+                                   text-slate-500 text-xl"
+                        >
+                            🔎
+                        </span>
+
+                        <input
+                            v-model="pesquisa"
+                            @input="mostrarSugestoes = true"
+                            @focus="mostrarSugestoes = true"
+                            @keyup.enter="consultarPrimeiroResultado"
+                            type="text"
+                            placeholder="Ex: BTC, Ethereum, SOL, AAVE..."
+                            autocomplete="off"
+                            class="w-full bg-slate-950
+                                   border border-slate-700
+                                   rounded-xl
+                                   pl-14 pr-5 py-4
+                                   text-white
+                                   placeholder-slate-600
+                                   outline-none
+                                   focus:border-cyan-500
+                                   focus:ring-2
+                                   focus:ring-cyan-500/20
+                                   transition"
+                        >
+
+
+                        <!-- ================================= -->
+                        <!-- AUTOCOMPLETE -->
+                        <!-- ================================= -->
+
+                        <div
+                            v-if="mostrarSugestoes && pesquisa && produtosFiltrados.length"
+                            class="absolute z-50
+                                   left-0 right-0 top-full mt-2
+                                   bg-slate-900
+                                   border border-slate-700
+                                   rounded-xl
+                                   shadow-2xl
+                                   overflow-hidden
+                                   max-h-80 overflow-y-auto"
+                        >
+
+                            <button
+                                v-for="produto in produtosFiltrados"
+                                :key="produto.id"
+                                @click="selecionarProduto(produto)"
+                                class="w-full
+                                       flex items-center
+                                       justify-between
+                                       gap-4
+                                       px-5 py-4
+                                       border-b border-slate-800
+                                       last:border-0
+                                       hover:bg-slate-800
+                                       transition
+                                       text-left"
+                            >
+
+                                <div class="flex items-center gap-3">
+
+                                    <div
+                                        class="w-10 h-10
+                                               rounded-full
+                                               bg-cyan-500/10
+                                               flex items-center
+                                               justify-center
+                                               text-cyan-400
+                                               font-bold text-xs"
+                                    >
+                                        {{ produto.base_currency }}
+                                    </div>
+
+                                    <div>
+
+                                        <p class="font-semibold text-white">
+                                            {{ produto.display_name || produto.id }}
+                                        </p>
+
+                                        <p class="text-xs text-slate-500">
+                                            {{ produto.id }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <span
+                                    class="text-xs
+                                           bg-slate-950
+                                           border border-slate-700
+                                           rounded-lg
+                                           px-3 py-1
+                                           text-slate-400"
+                                >
+                                    Consultar
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        @click="consultarPrimeiroResultado"
+                        :disabled="consultando"
+                        class="bg-cyan-500
+                               hover:bg-cyan-400
+                               disabled:bg-slate-700
+                               disabled:text-slate-500
+                               text-slate-950
+                               font-bold
+                               px-8 py-4
+                               rounded-xl
+                               transition"
+                    >
+                        {{ consultando ? "Consultando..." : "Consultar" }}
+                    </button>
+
+                </div>
+
+
+                <!-- QUANTIDADE DISPONÍVEL -->
+
+                <div class="flex flex-wrap gap-4 mt-4 text-sm text-slate-500">
+
+                    <span>
+                        {{ produtos.length }} pares encontrados na API
+                    </span>
+
+                    <span>
+                        •
+                    </span>
+
+                    <span>
+                        {{ moedas.length }} consultas no painel
+                    </span>
+
+                </div>
+
+
+                <!-- ERRO -->
+
+                <div
+                    v-if="erro"
+                    class="mt-5
+                           bg-red-500/10
+                           border border-red-500/30
+                           text-red-300
+                           rounded-xl
+                           p-4"
+                >
+                    ⚠️ {{ erro }}
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- CARREGANDO PRODUTOS -->
+        <!-- ================================================== -->
+
+        <div
+            v-if="carregandoProdutos"
+            class="text-center py-20"
+        >
+
+            <div
+                class="w-10 h-10
+                       border-4 border-slate-700
+                       border-t-cyan-400
+                       rounded-full
+                       animate-spin
+                       mx-auto"
+            ></div>
+
+            <p class="text-slate-400 mt-4">
+                Buscando moedas disponíveis na Coinbase...
+            </p>
+
+        </div>
+
+
+        <!-- ================================================== -->
+        <!-- PAINEL -->
+        <!-- ================================================== -->
+
+        <section v-else>
+
+
+            <!-- TÍTULO -->
+
+            <div
+                class="flex flex-col md:flex-row
+                       md:items-end md:justify-between
+                       gap-4 mb-6"
+            >
+
+                <div>
+
+                    <p class="text-cyan-400 text-xs uppercase tracking-widest">
+                        Monitoramento
+                    </p>
+
+                    <h2 class="text-2xl font-bold mt-1">
+                        Minhas consultas
+                    </h2>
+
+                    <p class="text-slate-500 text-sm mt-1">
+                        Os preços são atualizados automaticamente.
+                    </p>
+
+                </div>
+
+
+                <button
+                    v-if="moedas.length"
+                    @click="atualizarMoedas"
+                    class="border border-slate-700
+                           hover:border-cyan-500
+                           hover:text-cyan-400
+                           px-4 py-2
+                           rounded-lg
+                           text-sm
+                           transition"
+                >
+                    ↻ Atualizar agora
+                </button>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- NENHUMA CONSULTA -->
+            <!-- ================================================== -->
+
+            <div
+                v-if="moedas.length === 0"
+                class="border-2 border-dashed border-slate-800
+                       rounded-3xl
+                       py-20 px-6
+                       text-center"
+            >
+
+                <div class="text-5xl">
+                    ₿
+                </div>
+
+                <h3 class="text-xl font-bold mt-5">
+                    Faça sua primeira consulta
+                </h3>
+
+                <p class="text-slate-500 mt-2 max-w-md mx-auto">
+                    Digite uma criptomoeda no campo acima e selecione
+                    um dos pares encontrados pela API.
+                </p>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- CARDS -->
+            <!-- ================================================== -->
+
+            <div
+                v-else
+                class="grid grid-cols-1
+                       md:grid-cols-2
+                       xl:grid-cols-3
+                       gap-6"
+            >
+
+                <article
+                    v-for="moeda in moedas"
+                    :key="moeda.id"
+                    class="bg-slate-900
+                           border border-slate-800
+                           rounded-2xl
+                           p-6
+                           shadow-xl
+                           hover:border-cyan-500/40
+                           hover:-translate-y-1
+                           transition duration-300"
+                >
+
+
+                    <!-- CABEÇALHO CARD -->
+
+                    <div class="flex justify-between items-start gap-4">
+
+                        <div class="flex items-center gap-3">
+
+                            <div
+                                class="w-12 h-12
+                                       rounded-full
+                                       bg-cyan-500/10
+                                       border border-cyan-500/20
+                                       flex items-center
+                                       justify-center
+                                       text-cyan-400
+                                       font-bold text-xs"
+                            >
+                                {{ moeda.simbolo }}
+                            </div>
+
+                            <div>
+
+                                <h3 class="text-xl font-bold">
+                                    {{ moeda.nome }}
+                                </h3>
+
+                                <p class="text-slate-500 text-sm">
+                                    {{ moeda.id }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            @click="removerMoeda(moeda.id)"
+                            title="Remover"
+                            class="w-8 h-8
+                                   rounded-lg
+                                   bg-slate-800
+                                   hover:bg-red-500/10
+                                   hover:text-red-400
+                                   transition"
+                        >
+                            ✕
+                        </button>
+
+                    </div>
+
+
+                    <!-- PREÇO ATUAL -->
+
+                    <div class="mt-7">
+
+                        <p class="text-slate-500 text-sm">
+                            Preço atual
+                        </p>
+
+                        <p class="text-3xl font-bold mt-1">
+                            {{ formatarPreco(moeda.preco, moeda.moedaCotacao) }}
+                        </p>
+
+
+                        <!-- VARIAÇÃO -->
+
+                        <span
+                            class="inline-block mt-3
+                                   px-3 py-1
+                                   rounded-lg
+                                   text-sm font-semibold"
+                            :class="
+                                moeda.variacao >= 0
+                                    ? 'bg-green-500/10 text-green-400'
+                                    : 'bg-red-500/10 text-red-400'
+                            "
+                        >
+
+                            {{ moeda.variacao >= 0 ? "▲" : "▼" }}
+
+                            {{ Math.abs(moeda.variacao).toFixed(2) }}%
+
+                        </span>
+
+                        <span class="text-xs text-slate-500 ml-2">
+                            24h
+                        </span>
+
+                    </div>
+
+
+                    <!-- MÁXIMA / MÍNIMA -->
+
+                    <div class="grid grid-cols-2 gap-3 mt-6">
+
+                        <div
+                            class="bg-green-500/10
+                                   border border-green-500/20
+                                   rounded-xl p-4"
+                        >
+
+                            <p class="text-green-400 text-xs uppercase">
+                                ▲ Máxima 24h
+                            </p>
+
+                            <p class="font-bold mt-2">
+                                {{ formatarPreco(moeda.maxima, moeda.moedaCotacao) }}
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            class="bg-red-500/10
+                                   border border-red-500/20
+                                   rounded-xl p-4"
+                        >
+
+                            <p class="text-red-400 text-xs uppercase">
+                                ▼ Mínima 24h
+                            </p>
+
+                            <p class="font-bold mt-2">
+                                {{ formatarPreco(moeda.minima, moeda.moedaCotacao) }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ABERTURA / VOLUME -->
+
+                    <div class="grid grid-cols-2 gap-3 mt-3">
+
+                        <div
+                            class="bg-slate-950/60
+                                   border border-slate-800
+                                   rounded-xl p-4"
+                        >
+
+                            <p class="text-slate-500 text-xs uppercase">
+                                Abertura
+                            </p>
+
+                            <p class="font-semibold mt-2">
+                                {{ formatarPreco(moeda.abertura, moeda.moedaCotacao) }}
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            class="bg-slate-950/60
+                                   border border-slate-800
+                                   rounded-xl p-4"
+                        >
+
+                            <p class="text-slate-500 text-xs uppercase">
+                                Volume
+                            </p>
+
+                            <p class="font-semibold mt-2">
+                                {{ formatarNumero(moeda.volume) }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RODAPÉ CARD -->
+
+                    <div
+                        class="flex justify-between
+                               border-t border-slate-800
+                               mt-6 pt-4
+                               text-xs text-slate-500"
+                    >
+
+                        <span>
+                            Atualizado
+                        </span>
+
+                        <span>
+                            {{ moeda.atualizacao }}
+                        </span>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ====================================================== -->
+<!-- VUE -->
+<!-- ====================================================== -->
+
+<script>
+
+const {
+    createApp,
+    ref,
+    computed,
+    onMounted,
+    onUnmounted
+} = Vue;
+
+
+createApp({
+
+    setup() {
+
+        // ==================================================
+        // ESTADOS
+        // ==================================================
+
+        const pesquisa = ref("");
+
+        const produtos = ref([]);
+
+        const moedas = ref([]);
+
+        const erro = ref("");
+
+        const carregandoProdutos = ref(true);
+
+        const consultando = ref(false);
+
+        const atualizando = ref(false);
+
+        const mostrarSugestoes = ref(false);
+
+        let intervalo = null;
+
+
+        // ==================================================
+        // 1. BUSCAR OS PRODUTOS DA PRÓPRIA COINBASE
+        // ==================================================
+
+        async function carregarProdutos() {
+
+            carregandoProdutos.value = true;
+
+            erro.value = "";
+
+
+            try {
+
+                const resposta = await fetch(
+                    "https://api.exchange.coinbase.com/products"
+                );
+
+
+                if (!resposta.ok) {
+
+                    throw new Error(
+                        `Erro HTTP: ${resposta.status}`
+                    );
+
+                }
+
+
+                const dados = await resposta.json();
+
+
+                /*
+                    Não criamos uma lista de criptomoedas.
+
+                    "dados" vem diretamente da Coinbase.
+
+                    Aqui apenas filtramos pares que:
+
+                    1. possuem negociação habilitada;
+                    2. não estão cancelados;
+                    3. possuem moeda base e cotação.
+                */
+
+                produtos.value = dados
+
+                    .filter(produto => {
+
+                        return (
+                            !produto.trading_disabled &&
+                            !produto.cancel_only &&
+                            produto.base_currency &&
+                            produto.quote_currency
+                        );
+
+                    })
+
+                    .sort((a, b) => {
+
+                        return a.id.localeCompare(b.id);
+
+                    });
+
+
+                console.log(
+                    "Produtos encontrados:",
+                    produtos.value.length
+                );
+
+
+            } catch (e) {
+
+                console.error(e);
+
+                erro.value =
+                    "Não foi possível carregar os produtos da Coinbase.";
+
+            } finally {
+
+                carregandoProdutos.value = false;
+
+            }
+
+        }
+
+
+        // ==================================================
+        // 2. AUTOCOMPLETE
+        // ==================================================
+
+        const produtosFiltrados = computed(() => {
+
+            const texto = pesquisa.value
+                .trim()
+                .toUpperCase();
+
+
+            if (!texto) {
+
+                return [];
+
+            }
+
+
+            return produtos.value
+
+                .filter(produto => {
+
+                    const id =
+                        produto.id
+                        ?.toUpperCase() || "";
+
+                    const base =
+                        produto.base_currency
+                        ?.toUpperCase() || "";
+
+                    const cotacao =
+                        produto.quote_currency
+                        ?.toUpperCase() || "";
+
+                    const nome =
+                        produto.display_name
+                        ?.toUpperCase() || "";
+
+
+                    return (
+
+                        id.includes(texto) ||
+
+                        base.includes(texto) ||
+
+                        cotacao.includes(texto) ||
+
+                        nome.includes(texto)
+
+                    );
+
+                })
+
+                // Mostramos no máximo 12 sugestões
+                .slice(0, 12);
+
+        });
+
+
+        // ==================================================
+        // 3. SELECIONAR PRODUTO
+        // ==================================================
+
+        async function selecionarProduto(produto) {
+
+            mostrarSugestoes.value = false;
+
+            pesquisa.value = "";
+
+            erro.value = "";
+
+
+            // Verificar se já existe
+
+            const existe = moedas.value.some(
+
+                moeda =>
+                    moeda.id === produto.id
+
+            );
+
+
+            if (existe) {
+
+                erro.value =
+                    `${produto.id} já está no painel.`;
+
+                return;
+
+            }
+
+
+            consultando.value = true;
+
+
+            try {
+
+                const moeda =
+                    await buscarDadosProduto(produto);
+
+
+                // Adiciona no começo da lista
+
+                moedas.value.unshift(moeda);
+
+
+            } catch (e) {
+
+                console.error(e);
+
+                erro.value =
+                    `Não foi possível consultar ${produto.id}.`;
+
+            } finally {
+
+                consultando.value = false;
+
+            }
+
+        }
+
+
+        // ==================================================
+        // 4. ENTER / BOTÃO CONSULTAR
+        // ==================================================
+
+        function consultarPrimeiroResultado() {
+
+            if (!pesquisa.value.trim()) {
+
+                erro.value =
+                    "Digite uma moeda para pesquisar.";
+
+                return;
+
+            }
+
+
+            if (produtosFiltrados.value.length === 0) {
+
+                erro.value =
+                    "Nenhuma moeda encontrada com essa pesquisa.";
+
+                return;
+
+            }
+
+
+            selecionarProduto(
+                produtosFiltrados.value[0]
+            );
+
+        }
+
+
+        // ==================================================
+        // 5. BUSCAR PREÇO E ESTATÍSTICAS
+        // ==================================================
+
+        async function buscarDadosProduto(produto) {
+
+            const id = produto.id;
+
+
+            // ----------------------------------------------
+            // TICKER
+            // ----------------------------------------------
+
+            const respostaTicker = await fetch(
+
+                `https://api.exchange.coinbase.com/products/${id}/ticker`
+
+            );
+
+
+            if (!respostaTicker.ok) {
+
+                throw new Error(
+                    `Erro no ticker de ${id}`
+                );
+
+            }
+
+
+            // ----------------------------------------------
+            // ESTATÍSTICAS
+            // ----------------------------------------------
+
+            const respostaStats = await fetch(
+
+                `https://api.exchange.coinbase.com/products/${id}/stats`
+
+            );
+
+
+            if (!respostaStats.ok) {
+
+                throw new Error(
+                    `Erro nas estatísticas de ${id}`
+                );
+
+            }
+
+
+            const ticker =
+                await respostaTicker.json();
+
+            const stats =
+                await respostaStats.json();
+
+
+            // ----------------------------------------------
+            // VALORES
+            // ----------------------------------------------
+
+            const preco =
+                Number(ticker.price);
+
+            const maxima =
+                Number(stats.high);
+
+            const minima =
+                Number(stats.low);
+
+            const abertura =
+                Number(stats.open);
+
+            const volume =
+                Number(stats.volume);
+
+
+            // ----------------------------------------------
+            // VARIAÇÃO
+            // ----------------------------------------------
+
+            let variacao = 0;
+
+
+            if (
+                Number.isFinite(abertura) &&
+                abertura !== 0
+            ) {
+
+                variacao =
+                    ((preco - abertura) / abertura)
+                    * 100;
+
+            }
+
+
+            // ----------------------------------------------
+            // RESULTADO
+            // ----------------------------------------------
+
+            return {
+
+                id: produto.id,
+
+                simbolo:
+                    produto.base_currency,
+
+                moedaCotacao:
+                    produto.quote_currency,
+
+                nome:
+                    produto.display_name ||
+                    produto.id,
+
+                preco,
+
+                maxima,
+
+                minima,
+
+                abertura,
+
+                volume,
+
+                variacao,
+
+                produtoOriginal:
+                    produto,
+
+                atualizacao:
+                    new Date()
+                    .toLocaleTimeString("pt-BR")
+
+            };
+
+        }
+
+
+        // ==================================================
+        // 6. REMOVER CARD
+        // ==================================================
+
+        function removerMoeda(id) {
+
+            moedas.value =
+                moedas.value.filter(
+
+                    moeda =>
+                        moeda.id !== id
+
+                );
+
+        }
+
+
+        // ==================================================
+        // 7. ATUALIZAÇÃO AUTOMÁTICA
+        // ==================================================
+
+        async function atualizarMoedas() {
+
+            if (moedas.value.length === 0) {
+
+                return;
+
+            }
+
+
+            atualizando.value = true;
+
+
+            try {
+
+                /*
+                    Promise.allSettled é interessante aqui.
+
+                    Se uma moeda falhar, as outras
+                    ainda podem ser atualizadas.
+                */
+
+                const resultados =
+                    await Promise.allSettled(
+
+                        moedas.value.map(
+
+                            moeda =>
+
+                                buscarDadosProduto(
+                                    moeda.produtoOriginal
+                                )
+
+                        )
+
+                    );
+
+
+                /*
+                    Se determinada consulta funcionar,
+                    usamos o novo valor.
+
+                    Se falhar, mantemos o card anterior.
+                */
+
+                moedas.value =
+                    resultados.map(
+
+                        (resultado, indice) => {
+
+                            if (
+                                resultado.status
+                                === "fulfilled"
+                            ) {
+
+                                return resultado.value;
+
+                            }
+
+
+                            return moedas.value[indice];
+
+                        }
+
+                    );
+
+
+            } catch (e) {
+
+                console.error(
+                    "Erro na atualização:",
+                    e
+                );
+
+            } finally {
+
+                atualizando.value = false;
+
+            }
+
+        }
+
+
+        // ==================================================
+        // 8. FORMATAR PREÇO
+        // ==================================================
+
+        function formatarPreco(
+            valor,
+            moedaCotacao
+        ) {
+
+            if (!Number.isFinite(valor)) {
+
+                return "--";
+
+            }
+
+
+            /*
+                Nem todo par necessariamente será USD.
+
+                Então mostramos a moeda de cotação
+                recebida da própria API.
+            */
+
+            const numero =
+                valor.toLocaleString(
+
+                    "pt-BR",
+
+                    {
+                        minimumFractionDigits:
+                            valor < 1 ? 4 : 2,
+
+                        maximumFractionDigits:
+                            valor < 1 ? 8 : 2
+                    }
+
+                );
+
+
+            return `${moedaCotacao} ${numero}`;
+
+        }
+
+
+        // ==================================================
+        // 9. FORMATAR VOLUME
+        // ==================================================
+
+        function formatarNumero(valor) {
+
+            if (!Number.isFinite(valor)) {
+
+                return "--";
+
+            }
+
+
+            return valor.toLocaleString(
+
+                "pt-BR",
+
+                {
+                    maximumFractionDigits: 2
+                }
+
+            );
+
+        }
+
+
+        // ==================================================
+        // 10. INICIALIZAÇÃO
+        // ==================================================
+
+        onMounted(async () => {
+
+            /*
+                Repare:
+
+                NÃO TEM:
+
+                BTC
+                ETH
+                SOL
+                DOGE
+                XRP
+
+                escrito aqui.
+
+                Buscamos a lista diretamente
+                da Coinbase.
+            */
+
+            await carregarProdutos();
+
+
+            // Atualiza somente os cards que
+            // o usuário adicionou.
+
+            intervalo = setInterval(
+
+                atualizarMoedas,
+
+                15000
+
+            );
+
+        });
+
+
+        // ==================================================
+        // 11. ENCERRAMENTO
+        // ==================================================
+
+        onUnmounted(() => {
+
+            clearInterval(intervalo);
+
+        });
+
+
+        // ==================================================
+        // RETORNO PARA O HTML
+        // ==================================================
+
+        return {
+
+            pesquisa,
+
+            produtos,
+
+            moedas,
+
+            erro,
+
+            carregandoProdutos,
+
+            consultando,
+
+            atualizando,
+
+            mostrarSugestoes,
+
+            produtosFiltrados,
+
+            selecionarProduto,
+
+            consultarPrimeiroResultado,
+
+            removerMoeda,
+
+            atualizarMoedas,
+
+            formatarPreco,
+
+            formatarNumero
+
+        };
+
+    }
+
+}).mount("#app");
+
+</script>
+
+</body>
+</html>

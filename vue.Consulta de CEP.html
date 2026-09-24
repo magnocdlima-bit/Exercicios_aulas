@@ -72,6 +72,12 @@
         <strong>DDD:</strong>
         {{ endereco.ddd }}
       </p>
+
+      
+      <p>
+        <strong>Região:</strong>
+        {{ endereco.regiao }}
+      </p>
     </div>
 
 
@@ -145,6 +151,8 @@
             try {
               carregando.value = true;
 
+
+
               const resposta = await fetch(
                 `https://viacep.com.br/ws/${cepLimpo}/json/`,
               );
@@ -158,6 +166,8 @@
               }
 
               endereco.value = dados;
+
+
             } catch (problema) {
               erro.value = "Não foi possível consultar o CEP.";
 
