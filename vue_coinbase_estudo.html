@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudo Coinbase — Primeira etapa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-white">
+    <div id="app" class="max-w-xl mx-auto px-6 py-16">
+        <h1 class="text-3xl font-bold mb-6">Estudo Coinbase</h1>
+
+        <label for="moeda" class="block mb-2">Digite o símbolo da moeda:</label>
+        <input
+            id="moeda"
+            type="text"
+            v-model="moeda"
+            placeholder="Exemplo: btc"
+            class="w-full p-3 rounded-lg bg-slate-800 border border-slate-700"
+        >
+
+        <p class="mt-6">Você digitou: {{ moeda }}</p>
+
+        <button
+            type="button"
+            @click="prepararMoeda"
+            class="mt-4 bg-blue-600 hover:bg-blue-700 px-5 py-3 rounded-lg font-semibold"
+        >
+            Preparar moeda
+        </button>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        createApp({
+            setup() {
+                const moeda = ref("");
+
+                function prepararMoeda() {
+                    const simbolo = moeda.value.toUpperCase();
+                    const par = `${simbolo}-USD`;
+                    console.log(par);
+                }
+
+                return { moeda, prepararMoeda };
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>
