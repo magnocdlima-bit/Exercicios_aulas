@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudo Coinbase — Primeira etapa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-white">
+    <div id="app" class="max-w-xl mx-auto px-6 py-16">
+        <h1 class="text-3xl font-bold mb-6">Estudo Coinbase</h1>
+
+        <label for="moeda" class="block mb-2">Digite o símbolo da moeda:</label>
+        <input
+            id="moeda"
+            type="text"
+            v-model="moeda"
+            placeholder="Exemplo: btc"
+            class="w-full p-3 rounded-lg bg-slate-800 border border-slate-700"
+        >
+
+        <p class="mt-6">Você digitou: {{ moeda }}</p>
+
+        <button
+            type="button"
+            @click="prepararMoeda"
+            :disabled="carregando"
+            class="mt-4 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-5 py-3 rounded-lg font-semibold"
+        >
+            Preparar moeda
+        </button>
+
+        <p v-if="carregando" class="mt-6">Consultando...</p>
+
+        <p v-if="resultado" class="mt-6">
+            Preço em USD: {{ resultado.price }}
+        </p>
+
+        <p v-if="erro" class="mt-6 text-red-400">
+            {{ erro }}
+        </p>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        createApp({
+            setup() {
+                const moeda = ref("");
+                const resultado = ref(null);
+                const erro = ref("");
+                const carregando = ref(false);
+
+                async function prepararMoeda() {
+                    resultado.value = null;
+                    erro.value = "";
+
+                    const simbolo = moeda.value.toUpperCase();
+                    const par = `${simbolo}-USD`;
+                    const url = `https://api.exchange.coinbase.com/products/${par}/ticker`;
+                    console.log(url);
+
+                    carregando.value = true;
+
+                    try {
+                        const resposta = await fetch(url);
+                        console.log(resposta);
+
+                        if (!resposta.ok) {
+                            erro.value = "Não foi possível consultar esse par.";
+                            return;
+                        }
+
+                        const dados = await resposta.json();
+                        console.log(dados);
+                        resultado.value = dados;
+                    } catch (problema) {
+                        erro.value = "Não foi possível realizar a consulta.";
+                        console.error(problema);
+                    } finally {
+                        carregando.value = false;
+                    }
+                }
+
+                return { moeda, resultado, erro, carregando, prepararMoeda };
+
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>
