@@ -1,39 +1,195 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8" />
 
-    <title>Consulta de CEP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <title>Consulta de CEP</title>
 
-    <!-- Vue.js -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  </head>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  <body class="min-h-screen bg-slate-950 text-white">
-    <div id="app">
-      <h1 class="text-3xl font-bold">{{titulo}}</h1>
+  <!-- Vue.js -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
 
-      <p>Consulte um endereço utilizando a API ViaCEP.</p>
+<body class="min-h-screen bg-slate-950 text-white">
+  <div id="app" class="max-w-xl mx-auto py-20 px-6">
+    <h1 class="text-3xl font-bold mb-2">{{ titulo }}</h1>
+
+    <p class="text-slate-400 mb-6">
+      Consulte um endereço utilizando a API ViaCEP.
+    </p>
+
+    <input type="text" v-model="cep" @input="formatarCep" @keyup.enter="buscarCep" placeholder="Digite o CEP"
+      class="w-full p-3 rounded-lg bg-slate-800 border border-slate-700 mb-4" />
+
+    <button @click="limpar" class="bg-red-600 hover:bg-red-700 px-5 py-3 rounded-lg font-semibold">
+      Limpar
+    </button>
+
+    <button @click="buscarCep" :disabled="carregando"
+      class="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-5 py-3 rounded-lg font-semibold">
+      {{ carregando ? "Buscando..." : "Buscar CEP" }}
+    </button>
+
+    <div v-if="carregando" class="mt-8 bg-slate-800 border border-slate-700 rounded-xl p-6">
+      Consultando CEP...
+    </div>
+    <div v-else-if="endereco" class="mt-8 bg-slate-800 border border-slate-700 rounded-xl p-6">
+      <h2 class="text-xl font-bold mb-4">
+        Endereço encontrado
+      </h2>
+
+      <p>
+        <strong>CEP:</strong>
+        {{ endereco.cep }}
+      </p>
+
+      <p>
+        <strong>Rua:</strong>
+        {{ endereco.logradouro }}
+      </p>
+
+      <p>
+        <strong>Bairro:</strong>
+        {{ endereco.bairro }}
+      </p>
+
+      <p>
+        <strong>Cidade:</strong>
+        {{ endereco.localidade }}
+      </p>
+
+      <p>
+        <strong>Estado:</strong>
+        {{ endereco.uf }}
+      </p>
+
+      <p>
+        <strong>DDD:</strong>
+        {{ endereco.ddd }}
+      </p>
+
+      
+      <p>
+        <strong>Região:</strong>
+        {{ endereco.regiao }}
+      </p>
     </div>
 
-    <script>
-      const { creatApp } = vue;
 
-      creatApp({ 
-        setap() {
+    <p v-else-if="erro" class="mt-4 rounded-lg bg-red-500/10 border border-red-500/30 p-3 text-red-300">
+      {{ erro }}
+    </p>
 
-            const titulo = "consulta de CEP"
 
-            return {titulo};
+    <div v-else class="mt-4 text-slate-400">
+      AINDA NÃO TEMOS O ENDEREÇO
+    </div>
+  </div>
 
-        
-      }}).mount("#app");
+  <script>
+    const { createApp, ref } = Vue;
 
+      createApp({
+        setup() {
+          const titulo = "Consulta de CEP";
+
+          const cep = ref("");
+
+          const endereco = ref(null);
+
+          const carregando = ref(false);
+
+          const erro = ref("");
+
+          function limpar() {
+            cep.value = "";
+            endereco.value = null;
+            erro.value = "";
+            carregando.value = false;
+          }
+
+          function formatarCep() {
+
+            let numeros = cep.value.replace(/\D/g, "");
+
+            numeros = numeros.slice(0, 8)
+            if (numeros.length > 5) {
+
+              numeros =
+                numeros.slice(0, 5) +
+                "-" +
+                numeros.slice(5);
+
+
+            }
+
+            cep.value = numeros;
+          }
+
+
+
+
+
+          async function buscarCep() {
+            erro.value = "";
+
+            endereco.value = null;
+
+            const cepLimpo = cep.value.replace(/\D/g, "");
+
+            if (cepLimpo.length !== 8) {
+              erro.value = "Digite um CEP válido com 8 números.";
+
+              return;
+            }
+
+            try {
+              carregando.value = true;
+
+
+
+              const resposta = await fetch(
+                `https://viacep.com.br/ws/${cepLimpo}/json/`,
+              );
+
+              const dados = await resposta.json();
+
+              if (dados.erro) {
+                erro.value = "CEP não encontrado.";
+
+                return;
+              }
+
+              endereco.value = dados;
+
+
+            } catch (problema) {
+              erro.value = "Não foi possível consultar o CEP.";
+
+              console.error(problema);
+            } finally {
+              carregando.value = false;
+            }
+          }
+
+          return {
+            titulo,
+            cep,
+            endereco,
+            carregando,
+            erro,
+            buscarCep,
+            limpar,
+            formatarCep
+          };
+        },
+      }).mount("#app");
     </script>
-  </body>
+</body>
+
 </html>
