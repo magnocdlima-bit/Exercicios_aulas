@@ -9,41 +9,33 @@ Repositório dedicado aos exercícios, desafios de código e projetos desenvolvi
 - **Vue.js 3** (Reatividade, Composition API, Diretivas, Ciclo de vida)
 - **JavaScript (ES6+)** (Async/Await, Fetch API, Tratamento de Erros)
 - **Tailwind CSS** (Interface moderna, responsiva e Dark Mode)
+- **Python e Flask** (APIs e aplicações web)
 - **HTML5 & CSS3**
 
 ---
 
-## 📂 Conteúdo do Repositório
+## Conteúdo por tecnologia
 
-### 1. 🔍 Consulta de CEP (`vue.Consulta de CEP.html`)
-- Aplicação interativa em Vue 3 consumindo a API pública do **ViaCEP**.
-- Máscara automática de CEP no formato `00000-000`.
-- Busca ao pressionar a tecla `Enter` ou clicar no botão.
-- Estados visuais de carregamento (*loading*), tratamento de erros e exibição de detalhes (Rua, Bairro, Cidade, UF, DDD e Região).
+### Vue (`Vue/`)
+- [`vue.Consulta de CEP.html`](Vue/vue.Consulta%20de%20CEP.html): consulta ViaCEP com máscara, validação e estados de carregamento.
+- [`vue.for.html`](Vue/vue.for.html): renderização de listas com `v-for`.
+- [`vue_one_without_tailwind.html`](Vue/vue_one_without_tailwind.html): fundamentos de reatividade sem framework CSS.
+- [`vue_api_coin_base.html`](Vue/vue_api_coin_base.html): painel de cotações usando a API da Coinbase.
+- [`vue_coinbase_estudo.html`](Vue/vue_coinbase_estudo.html): exercício introdutório com ticker da Coinbase.
 
-### 2. 📈 Crypto Dashboard (`vue_api_coin_base.html`)
-- Painel financeiro em tempo real consumindo a API pública da **Coinbase**.
-- Busca e seleção de pares de negociação de criptomoedas.
-- Cards interativos com cotação atual, máximas/mínimas do dia, volume negociado e variação percentual de 24h.
-- Atualização automática em segundo plano via `setInterval` e `Promise.allSettled`.
+### JavaScript (`JavaScript/`)
+- [`Logica_de_Programação1.html`](JavaScript/Logica_de_Programa%C3%A7%C3%A3o1.html): algoritmos e exercícios de lógica.
 
-### 3. 🔁 Renderização com Laços (`vue.for.html`)
-- Prática com a diretiva `v-for` para renderização dinâmica de listas e estruturas de repetição no Vue.js.
-
-### 4. ⚡ Fundamentos do Vue (`vue_one_without_tailwind.html`)
-- Estrutura base de reatividade com Vue 3 puro sem dependência de frameworks CSS adicionais.
-
-### 5. 🧠 Lógica de Programação (`Logica_de_Programação1.html`)
-- Algoritmos e exercícios práticos de fixação da lógica computacional em JavaScript.
-
-### 6. 💱 Estudo Coinbase (`vue_coinbase_estudo.html`)
-- Exercício introdutório que consulta o ticker de um par de moedas na API pública da Coinbase.
+### Python (`Python/`)
+- `api-alunos/`: API Flask para consultar e cadastrar alunos.
+- `app-flask/`: aplicação Flask com template HTML.
+- Instruções de execução em [`Python/README.md`](Python/README.md).
 
 ---
 
 ## 🚀 Como Executar
 
-Por utilizarem bibliotecas carregadas via CDN (Vue.js e Tailwind CSS), você pode abrir diretamente os arquivos `.html` no navegador ou usar a extensão **Live Server** no VS Code para uma melhor experiência.
+As páginas HTML usam bibliotecas carregadas via CDN (Vue.js e Tailwind CSS); abra os arquivos da pasta `Vue/` no navegador ou com Live Server. Para executar os projetos Python, siga [`Python/README.md`](Python/README.md).
 
 ---
 
