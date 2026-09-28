@@ -14,3 +14,6 @@ $RECYCLE.BIN/
 # Dependências e Logs
 node_modules/
 *.log
+
+# Clone antigo preservado localmente, fora do repositório principal
+/Exercicios_aulas/

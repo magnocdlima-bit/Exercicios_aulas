@@ -36,6 +36,9 @@ Repositório dedicado aos exercícios, desafios de código e projetos desenvolvi
 ### 5. 🧠 Lógica de Programação (`Logica_de_Programação1.html`)
 - Algoritmos e exercícios práticos de fixação da lógica computacional em JavaScript.
 
+### 6. 💱 Estudo Coinbase (`vue_coinbase_estudo.html`)
+- Exercício introdutório que consulta o ticker de um par de moedas na API pública da Coinbase.
+
 ---
 
 ## 🚀 Como Executar
