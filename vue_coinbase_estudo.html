@@ -25,10 +25,21 @@
         <button
             type="button"
             @click="prepararMoeda"
-            class="mt-4 bg-blue-600 hover:bg-blue-700 px-5 py-3 rounded-lg font-semibold"
+            :disabled="carregando"
+            class="mt-4 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-5 py-3 rounded-lg font-semibold"
         >
             Preparar moeda
         </button>
+
+        <p v-if="carregando" class="mt-6">Consultando...</p>
+
+        <p v-if="resultado" class="mt-6">
+            Preço em USD: {{ resultado.price }}
+        </p>
+
+        <p v-if="erro" class="mt-6 text-red-400">
+            {{ erro }}
+        </p>
     </div>
 
     <script>
@@ -37,14 +48,43 @@
         createApp({
             setup() {
                 const moeda = ref("");
+                const resultado = ref(null);
+                const erro = ref("");
+                const carregando = ref(false);
 
-                function prepararMoeda() {
+                async function prepararMoeda() {
+                    resultado.value = null;
+                    erro.value = "";
+
                     const simbolo = moeda.value.toUpperCase();
                     const par = `${simbolo}-USD`;
-                    console.log(par);
+                    const url = `https://api.exchange.coinbase.com/products/${par}/ticker`;
+                    console.log(url);
+
+                    carregando.value = true;
+
+                    try {
+                        const resposta = await fetch(url);
+                        console.log(resposta);
+
+                        if (!resposta.ok) {
+                            erro.value = "Não foi possível consultar esse par.";
+                            return;
+                        }
+
+                        const dados = await resposta.json();
+                        console.log(dados);
+                        resultado.value = dados;
+                    } catch (problema) {
+                        erro.value = "Não foi possível realizar a consulta.";
+                        console.error(problema);
+                    } finally {
+                        carregando.value = false;
+                    }
                 }
 
-                return { moeda, prepararMoeda };
+                return { moeda, resultado, erro, carregando, prepararMoeda };
+
             }
         }).mount("#app");
     </script>
