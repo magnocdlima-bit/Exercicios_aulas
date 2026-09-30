@@ -33,9 +33,16 @@
 
         <p v-if="carregando" class="mt-6">Consultando...</p>
 
-        <p v-if="resultado" class="mt-6">
-            Preço em USD: {{ resultado.price }}
-        </p>
+        <div class="mt-6 grid gap-4 sm:grid-cols-2">
+            <article
+                v-for="(consulta, indice) in consultas"
+                :key="indice"
+                class="rounded-lg bg-slate-800 border border-slate-700 p-4"
+            >
+                <h2 class="text-xl font-bold">{{ consulta.par }}</h2>
+                <p class="mt-2">Preço em USD: {{ consulta.price }}</p>
+            </article>
+        </div>
 
         <p v-if="erro" class="mt-6 text-red-400">
             {{ erro }}
@@ -48,12 +55,11 @@
         createApp({
             setup() {
                 const moeda = ref("");
-                const resultado = ref(null);
+                const consultas = ref([]);
                 const erro = ref("");
                 const carregando = ref(false);
 
                 async function prepararMoeda() {
-                    resultado.value = null;
                     erro.value = "";
 
                     const simbolo = moeda.value.toUpperCase();
@@ -74,7 +80,9 @@
 
                         const dados = await resposta.json();
                         console.log(dados);
-                        resultado.value = dados;
+
+                        consultas.value.push({ par, price: dados.price });
+
                     } catch (problema) {
                         erro.value = "Não foi possível realizar a consulta.";
                         console.error(problema);
@@ -83,7 +91,7 @@
                     }
                 }
 
-                return { moeda, resultado, erro, carregando, prepararMoeda };
+                return { moeda, consultas, erro, carregando, prepararMoeda };
 
             }
         }).mount("#app");
